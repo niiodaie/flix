@@ -8,6 +8,7 @@ ALTER TABLE comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE watch_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tips ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sponsored_videos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE follows ENABLE ROW LEVEL SECURITY;
 
 -- Policies for profiles
 CREATE POLICY "Users can view all profiles." ON profiles FOR SELECT USING (true);
@@ -32,12 +33,19 @@ CREATE POLICY "Users can update their own comments." ON comments FOR UPDATE USIN
 CREATE POLICY "Users can delete their own comments." ON comments FOR DELETE USING (auth.uid() = user_id);
 
 -- Policies for watch_events
+CREATE POLICY "Users can view their own watch events." ON watch_events FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert their own watch events." ON watch_events FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 -- Policies for tips
-CREATE POLICY "Users can insert their own tips." ON tips FOR INSERT WITH CHECK (auth.uid() = tipper_id);
+CREATE POLICY "Users can view tips they sent or received." ON tips FOR SELECT USING (auth.uid() = from_user OR auth.uid() = to_user);
+CREATE POLICY "Users can insert their own tips." ON tips FOR INSERT WITH CHECK (auth.uid() = from_user);
 
 -- Policies for sponsored_videos
 CREATE POLICY "Users can view all sponsored videos." ON sponsored_videos FOR SELECT USING (true);
+
+-- Policies for follows
+CREATE POLICY "Users can view all follows." ON follows FOR SELECT USING (true);
+CREATE POLICY "Users can insert their own follows." ON follows FOR INSERT WITH CHECK (auth.uid() = follower_id);
+CREATE POLICY "Users can delete their own follows." ON follows FOR DELETE USING (auth.uid() = follower_id);
 
 
