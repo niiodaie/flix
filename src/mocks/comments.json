@@ -1,0 +1,83 @@
+[
+  {
+    "id": "comment_001",
+    "videoId": "vid_001",
+    "userId": "user_002",
+    "text": "Absolutely stunning! The colors in this sunset are incredible 🌅",
+    "createdAt": "2024-08-20T19:15:00Z",
+    "likes": 12
+  },
+  {
+    "id": "comment_002",
+    "videoId": "vid_001",
+    "userId": "user_006",
+    "text": "Great composition! What camera settings did you use?",
+    "createdAt": "2024-08-20T20:30:00Z",
+    "likes": 8
+  },
+  {
+    "id": "comment_003",
+    "videoId": "vid_002",
+    "userId": "user_009",
+    "text": "That ramen looks amazing! I need to visit Tokyo soon 🍜",
+    "createdAt": "2024-08-19T13:45:00Z",
+    "likes": 15
+  },
+  {
+    "id": "comment_004",
+    "videoId": "vid_003",
+    "userId": "user_005",
+    "text": "Super helpful tutorial! Just ordered the foam panels you recommended",
+    "createdAt": "2024-08-18T11:20:00Z",
+    "likes": 23
+  },
+  {
+    "id": "comment_005",
+    "videoId": "vid_004",
+    "userId": "user_demo",
+    "text": "Perfect morning routine! This really helped me start my day better",
+    "createdAt": "2024-08-17T07:30:00Z",
+    "likes": 6
+  },
+  {
+    "id": "comment_006",
+    "videoId": "vid_005",
+    "userId": "user_003",
+    "text": "Incredible speed! Your TypeScript skills are on another level 🔥",
+    "createdAt": "2024-08-16T15:45:00Z",
+    "likes": 34
+  },
+  {
+    "id": "comment_007",
+    "videoId": "vid_007",
+    "userId": "user_004",
+    "text": "Such a peaceful transformation! Minimalism really does bring clarity",
+    "createdAt": "2024-08-14T12:15:00Z",
+    "likes": 19
+  },
+  {
+    "id": "comment_008",
+    "videoId": "vid_009",
+    "userId": "user_012",
+    "text": "Tried this recipe last night - absolutely delicious! Thanks for sharing 🍕",
+    "createdAt": "2024-08-12T21:00:00Z",
+    "likes": 27
+  },
+  {
+    "id": "comment_009",
+    "videoId": "vid_011",
+    "userId": "user_001",
+    "text": "Your digital art skills are incredible! The detail in this landscape is amazing",
+    "createdAt": "2024-08-10T17:20:00Z",
+    "likes": 18
+  },
+  {
+    "id": "comment_010",
+    "videoId": "vid_012",
+    "userId": "user_007",
+    "text": "This cafe looks so cozy! What's the name of this place?",
+    "createdAt": "2024-08-09T09:15:00Z",
+    "likes": 9
+  }
+]
+

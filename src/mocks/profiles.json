@@ -1,0 +1,120 @@
+[
+  {
+    "id": "user_001",
+    "handle": "@naturelens",
+    "name": "Alex Chen",
+    "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    "bio": "Nature photographer capturing the world's beauty one frame at a time 📸🌅",
+    "country": "Canada",
+    "isCreator": true
+  },
+  {
+    "id": "user_002",
+    "handle": "@tokyofoodie",
+    "name": "Yuki Tanaka",
+    "avatarUrl": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+    "bio": "Food explorer sharing the best eats from Tokyo and beyond 🍜🥢",
+    "country": "Japan",
+    "isCreator": true
+  },
+  {
+    "id": "user_003",
+    "handle": "@studiosetup",
+    "name": "Marcus Johnson",
+    "avatarUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    "bio": "Music producer helping artists build their dream studios 🎵🎧",
+    "country": "USA",
+    "isCreator": true
+  },
+  {
+    "id": "user_004",
+    "handle": "@zenflow",
+    "name": "Sarah Williams",
+    "avatarUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+    "bio": "Yoga instructor spreading peace and wellness through movement 🧘‍♀️✨",
+    "country": "Australia",
+    "isCreator": true
+  },
+  {
+    "id": "user_005",
+    "handle": "@codefast",
+    "name": "David Kim",
+    "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+    "bio": "Full-stack developer sharing coding tips and tutorials 💻⚡",
+    "country": "South Korea",
+    "isCreator": true
+  },
+  {
+    "id": "user_006",
+    "handle": "@urbanframes",
+    "name": "Emma Rodriguez",
+    "avatarUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+    "bio": "Street photographer capturing urban life and city stories 🏙️📷",
+    "country": "Spain",
+    "isCreator": true
+  },
+  {
+    "id": "user_007",
+    "handle": "@minimallife",
+    "name": "Lisa Anderson",
+    "avatarUrl": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face",
+    "bio": "Minimalist lifestyle advocate helping others declutter their lives 🏠✨",
+    "country": "Sweden",
+    "isCreator": true
+  },
+  {
+    "id": "user_008",
+    "handle": "@nightgamer",
+    "name": "Jake Thompson",
+    "avatarUrl": "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face",
+    "bio": "Gaming content creator and professional procrastinator 🎮😴",
+    "country": "UK",
+    "isCreator": true
+  },
+  {
+    "id": "user_009",
+    "handle": "@nonnaskitchen",
+    "name": "Giuseppe Rossi",
+    "avatarUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face",
+    "bio": "Italian chef sharing family recipes passed down through generations 🍕👨‍🍳",
+    "country": "Italy",
+    "isCreator": true
+  },
+  {
+    "id": "user_010",
+    "handle": "@mountainhigh",
+    "name": "Chris Wilson",
+    "avatarUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face",
+    "bio": "Adventure seeker documenting epic hikes and outdoor experiences ⛰️🥾",
+    "country": "USA",
+    "isCreator": true
+  },
+  {
+    "id": "user_011",
+    "handle": "@digitalbrush",
+    "name": "Maya Patel",
+    "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
+    "bio": "Digital artist creating fantasy worlds and magical creatures 🎨🐉",
+    "country": "India",
+    "isCreator": true
+  },
+  {
+    "id": "user_012",
+    "handle": "@coffeemorning",
+    "name": "Sophie Martin",
+    "avatarUrl": "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face",
+    "bio": "Coffee enthusiast sharing cozy moments and productivity tips ☕📚",
+    "country": "France",
+    "isCreator": true
+  },
+  {
+    "id": "user_demo",
+    "handle": "@demouser",
+    "name": "Demo User",
+    "avatarUrl": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face",
+    "bio": "This is your demo profile! You can edit this in settings.",
+    "country": "Demo Land",
+    "isCreator": false
+  }
+]
+

@@ -1,273 +1,266 @@
-# FLIX: Next-Gen Video Social Media Platform
+# FLIX - Modular Video Platform
 
-FLIX is a cutting-edge video sharing and discovery platform designed to offer a unique experience with its signature **LENS** personalized feed, powered by AI-driven recommendations.
+A next-generation video sharing platform with personalized LENS feed and creator monetization features. Built with a modular data layer that supports both mock data (for development) and Supabase (for production).
 
-## Table of Contents
+## 🎭 Demo Mode vs Production Mode
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Environment Variables](#environment-variables)
-  - [Running Locally](#running-locally)
-- [Database Setup (Supabase)](#database-setup-supabase)
-- [Deployment](#deployment)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
+FLIX features a **modular data architecture** that allows you to:
+- **Demo Mode**: Run completely offline with mock data and localStorage
+- **Production Mode**: Connect to Supabase for real backend functionality
 
-## Features
+Switch between modes using the `NEXT_PUBLIC_ENABLE_SUPABASE` environment variable.
 
-### 1. Authentication & Profiles
-- Email, phone, and magic-link authentication via Supabase.
-- Customizable user profiles with username, avatar, bio, location, and handle.
-- Follow/unfollow, block, and report functionalities.
+## 🚀 Quick Start
 
-### 2. Video Engine
-- Seamless video upload, transcoding, and HLS streaming.
-- Automatic thumbnail generation, duration detection, and caption generation.
-- Comprehensive metadata management: title, description, hashtags, categories.
-- Support for public, unlisted, and private video modes.
-
-### 3. Discovery & LENS Feed
-- **LENS**: A highly personalized, AI-powered video feed curated based on user activity and preferences.
-- Explore section for trending videos, new releases, category-based browsing, and geo-filtered content.
-- Infinite scrolling UI for a smooth content discovery experience.
-
-### 4. Engagement
-- Like, comment, and share functionalities for videos.
-- Watch history tracking.
-- Ability to save videos to personal collections.
-
-### 5. Monetization (MVP Hooks)
-- **Creator Tips**: Integrated Stripe Connect for direct tipping to creators (FLIX retains a small commission).
-- **Affiliate Links**: Creators can attach affiliate URLs to their videos.
-- **Sponsored Slots (Scaffolding)**: Reserved spaces within the LENS feed for future native advertising integrations.
-
-### 6. Creator Dashboard v0
-- Overview of tips earned, total views, likes, and watch time.
-
-### 7. Trust & Safety
-- Basic moderation dashboard for content oversight.
-- AI-powered NSFW flagging (optional integration).
-- User reporting and blocklist management.
-
-## Tech Stack
-
-- **Frontend:** Next.js (App Router) + React + TypeScript + Tailwind CSS + shadcn/ui
-- **Backend:** Next.js API routes + Supabase Edge Functions
-- **Database:** PostgreSQL (Supabase) with Row-Level Security (RLS)
-- **Video Storage & Delivery:** Cloudflare R2 + Cloudflare Stream (or Mux for managed transcoding)
-- **Realtime:** Supabase Realtime (for likes, comments, notifications)
-- **AI Layer:** OpenAI embeddings (for personalization and recommendations)
-- **Payments:** Stripe Connect (for tips and payouts)
-- **Deployment:** Vercel (frontend + API) + Supabase (database + auth)
-
-## Getting Started
-
-Follow these instructions to set up and run FLIX locally.
-
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm or Yarn
-- Git
-- A Supabase project (free tier is sufficient for development)
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/flix.git
-   cd flix
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   # or yarn install
-   ```
-
-### Environment Variables
-
-Create a `.env.local` file in the root of the project based on `.env.example`:
-
-```
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-
-# Optional: Cloudflare Stream/Mux API keys for video
-CLOUDFLARE_STREAM_API_KEY=
-MUX_ACCESS_TOKEN_ID=
-MUX_SECRET_KEY=
-
-# Optional: OpenAI API key for AI features
-OPENAI_API_KEY=
-
-# Optional: Stripe Secret Key for payments
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
+### 1. Install Dependencies
+```bash
+npm install
 ```
 
-- `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL.
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase public `anon` key.
-- `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase `service_role` key (use with caution, keep secure).
-
-You can find these keys in your Supabase project settings under `API`.
-
-### Running Locally
-
-1. Start the development server:
-   ```bash
-   npm run dev
-   # or yarn dev
-   ```
-
-2. Open your browser and navigate to `http://localhost:3000`.
-
-## Database Setup (Supabase)
-
-1. **Create a new Supabase project** if you haven't already.
-2. **Run Migrations:** You can apply the schema and policies using the Supabase CLI or by pasting the SQL into the SQL Editor in your Supabase dashboard.
-   ```bash
-   # Ensure Supabase CLI is installed: npm install -g supabase-cli
-   # Login to Supabase CLI: supabase login
-   # Link your project: supabase link --project-ref your-project-ref
-   # Apply schema:
-   supabase db push --file supabase/schema.sql
-   # Apply policies:
-   supabase sql --file supabase/policies.sql
-   ```
-   Alternatively, copy the contents of `supabase/schema.sql` and `supabase/policies.sql` into the SQL Editor in your Supabase dashboard and run them.
-
-3. **Seed Data (Optional):** To populate your database with sample data, run:
-   ```bash
-   npm run seed
-   # or yarn seed
-   ```
-   *Note: Ensure `ts-node` is installed (`npm install -g ts-node` or `yarn add global ts-node`).*
-
-## Deployment
-
-This project is configured for deployment on [Vercel](https://vercel.com/).
-
-1. **Connect your Git repository** (GitHub, GitLab, Bitbucket) to Vercel.
-2. **Configure Environment Variables** on Vercel (matching your `.env.local` file).
-3. Vercel will automatically detect the Next.js project and deploy it.
-
-Supabase handles its own deployment for the database and Edge Functions.
-
-## Project Structure
-
-```
-flix/
-├─ .env.example
-├─ .gitignore
-├─ README.md
-├─ package.json
-├─ tsconfig.json
-├─ next.config.js
-├─ postcss.config.js
-├─ tailwind.config.js
-├─ public/
-│  ├─ icons/
-│  ├─ images/
-│  ├─ favicons/
-│  ├─ manifest.json
-│  └─ robots.txt
-├─ src/
-│  ├─ app/
-│  │  ├─ layout.tsx
-│  │  ├─ page.tsx
-│  │  ├─ explore/
-│  │  │  └─ page.tsx
-│  │  ├─ lens/
-│  │  │  └─ page.tsx
-│  │  ├─ upload/
-│  │  │  └─ page.tsx
-│  │  ├─ watch/
-│  │  │  └─ [videoId]/page.tsx
-│  │  ├─ profile/
-│  │  │  └─ [username]/page.tsx
-│  │  ├─ auth/
-│  │  │  ├─ sign-in/page.tsx
-│  │  │  ├─ sign-up/page.tsx
-│  │  │  └─ callback/page.tsx
-│  │  ├─ settings/
-│  │  │  ├─ page.tsx
-│  │  │  ├─ notifications.tsx
-│  │  │  └─ preferences.tsx
-│  │  └─ api/
-│  │     ├─ videos/route.ts
-│  │     ├─ lens/route.ts
-│  │     ├─ explore/route.ts
-│  │     ├─ comments/route.ts
-│  │     ├─ likes/route.ts
-│  │     ├─ search/route.ts
-│  │     ├─ notifications/route.ts
-│  │     ├─ reports/route.ts
-│  │     └─ stripe/
-│  │        ├─ checkout/route.ts
-│  │        └─ webhook/route.ts
-│  ├─ components/
-│  │  ├─ layout/
-│  │  │  ├─ Navbar.tsx
-│  │  │  └─ Footer.tsx
-│  │  ├─ ui/                # shadcn components generated here
-│  │  ├─ video/
-│  │  │  ├─ VideoPlayer.tsx
-│  │  │  ├─ VideoCard.tsx
-│  │  │  └─ VideoUploader.tsx
-│  │  ├─ lens/
-│  │  │  ├─ LensFeed.tsx
-│  │  │  └─ LensFilters.tsx
-│  │  ├─ comments/
-│  │  │  ├─ CommentForm.tsx
-│  │  │  └─ CommentList.tsx
-│  │  ├─ tips/TipDialog.tsx
-│  │  └─ loaders/Skeleton.tsx
-│  ├─ lib/
-│  │  ├─ supabaseClient.ts
-│  │  ├─ auth.ts
-│  │  ├─ api.ts
-│  │  ├─ lens.ts
-│  │  ├─ video.ts
-│  │  ├─ stripe.ts
-│  │  ├─ i18n.ts
-│  │  └─ analytics.ts
-│  ├─ hooks/
-│  │  ├─ useLensFeed.ts
-│  │  ├─ useAuth.ts
-│  │  ├─ useUpload.ts
-│  │  ├─ useRealtime.ts
-│  │  └─ useNotifications.ts
-│  ├─ styles/
-│  │  └─ globals.css
-│  └─ types/
-│     ├─ video.ts
-│     ├─ lens.ts
-│     ├─ auth.ts
-│     └─ user.ts
-├─ scripts/
-│  ├─ seed.ts
-│  ├─ migrate.ts
-│  ├─ deploy.sh
-│  └─ lint-fix.sh
-└─ supabase/
-   ├─ schema.sql
-   ├─ policies.sql
-   └─ functions/
-      ├─ lens-ranker.ts
-      ├─ moderation-check.ts
-      └─ tips-payout.ts
+### 2. Configure Environment
+Copy the environment template:
+```bash
+cp .env.example .env.local
 ```
 
-## Contributing
+For **Demo Mode** (default):
+```env
+NEXT_PUBLIC_ENABLE_SUPABASE=false
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+For **Production Mode** with Supabase:
+```env
+NEXT_PUBLIC_ENABLE_SUPABASE=true
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+```
 
-## License
+### 3. Run Development Server
+```bash
+npm run dev
+```
 
-This project is licensed under the MIT License.
+Visit `http://localhost:3000` to see FLIX in action!
+
+## 🏗️ Architecture
+
+### Modular Data Layer
+```
+src/lib/data/
+├── index.ts              # Factory that selects driver
+├── types.ts              # Shared data types
+└── drivers/
+    ├── mock.ts           # Mock data + localStorage
+    └── supabase.ts       # Supabase integration
+```
+
+### Key Features
+
+#### 🎯 LENS Personalization
+- **Smart Feed Algorithm**: Personalizes content based on user behavior
+- **Interaction Tracking**: Monitors likes, views, dwell time, and follows
+- **Tag-Based Recommendations**: Suggests content based on liked video tags
+- **Real-time Learning**: Adapts to user preferences over time
+
+#### 💰 Creator Monetization
+- **Stripe Tips**: Direct creator tipping with suggested amounts
+- **Affiliate Links**: "Shop Now" buttons on videos
+- **Sponsored Content**: Marked sponsored videos with targeting
+- **Revenue Analytics**: Comprehensive earnings tracking
+
+#### 📊 Creator Dashboard
+- **Performance Metrics**: Views, likes, completion rates
+- **Earnings Overview**: Tips, affiliate commissions, sponsorships
+- **LENS Analytics**: Track personalized feed performance
+- **Video Insights**: Individual video performance data
+
+## 🎮 Demo Mode Features
+
+When `NEXT_PUBLIC_ENABLE_SUPABASE=false`:
+
+### Mock Data
+- **12 Sample Videos**: Diverse content across categories
+- **12 Creator Profiles**: Complete with avatars and bios
+- **Sample Comments**: Realistic engagement data
+- **Demo User Profile**: Customizable via settings
+
+### Local Persistence
+- **Likes & Interactions**: Stored in localStorage
+- **Personalization Data**: Tracks your preferences
+- **Comments**: Add comments that persist locally
+- **Profile Customization**: Edit your demo profile
+
+### UI Features
+- **Demo Mode Banner**: Clear indication of offline mode
+- **Functional Interactions**: Like, comment, tip (mock)
+- **Personalized Feed**: LENS algorithm works with mock data
+- **Responsive Design**: Works on desktop and mobile
+
+## 🔧 Production Setup (Supabase)
+
+### 1. Create Supabase Project
+1. Go to [supabase.com](https://supabase.com)
+2. Create a new project
+3. Get your project URL and API keys
+
+### 2. Set Up Database
+Run the SQL files in your Supabase SQL editor:
+```sql
+-- Run these in order:
+-- 1. supabase/schema.sql (creates tables)
+-- 2. supabase/policies.sql (sets up RLS)
+```
+
+### 3. Configure Authentication
+In your Supabase dashboard:
+- **Authentication → URL Configuration**
+- Set **Site URL**: `https://your-domain.com`
+- Add **Redirect URLs**: `https://your-domain.com/**`
+
+### 4. Environment Variables
+Update `.env.local` with your Supabase credentials:
+```env
+NEXT_PUBLIC_ENABLE_SUPABASE=true
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+```
+
+### 5. Deploy
+```bash
+npm run build
+# Deploy to Vercel, Netlify, or your preferred platform
+```
+
+## 📱 Pages & Features
+
+### Core Pages
+- **`/`** - LENS personalized feed
+- **`/explore`** - Trending and discovery
+- **`/upload`** - Video upload interface (UI only in demo)
+- **`/dashboard`** - Creator analytics and earnings
+- **`/profile/[username]`** - User profiles
+- **`/settings`** - Account and preferences
+
+### API Routes
+- **`/api/lens`** - Personalized feed algorithm
+- **`/api/explore`** - Trending content
+- **`/api/tips`** - Creator tipping system
+- **`/api/creator/dashboard`** - Analytics data
+- **`/api/me`** - Current user profile
+
+## 🛠️ Development
+
+### Build & Test
+```bash
+# Development
+npm run dev
+
+# Production build
+npm run build
+
+# Start production server
+npm start
+
+# Type checking
+npm run type-check
+
+# Linting
+npm run lint
+```
+
+### Adding New Features
+1. **Data Layer**: Add methods to both `mock.ts` and `supabase.ts` drivers
+2. **Types**: Update `types.ts` with new interfaces
+3. **Components**: Use the `repo` from `@/lib/data` for data access
+4. **API Routes**: Create endpoints that work with both drivers
+
+### Switching Drivers
+The data layer automatically selects the appropriate driver based on the `NEXT_PUBLIC_ENABLE_SUPABASE` environment variable. No code changes needed!
+
+## 🎨 UI Components
+
+### Video Components
+- **VideoCard**: Interactive video cards with like/tip buttons
+- **VideoPlayer**: Video playback interface
+- **LensFeed**: Personalized video feed
+
+### Creator Tools
+- **TipDialog**: Beautiful tipping interface
+- **Dashboard**: Analytics and earnings overview
+- **Upload Interface**: Drag & drop video upload
+
+### Layout
+- **Navbar**: Navigation with search and user menu
+- **Responsive Grid**: Works on all screen sizes
+- **Dark Theme**: Modern dark UI with neon accents
+
+## 🔒 Security & Privacy
+
+### Demo Mode
+- All data stays in your browser
+- No external API calls
+- No personal information collected
+- LocalStorage can be cleared anytime
+
+### Production Mode
+- Row Level Security (RLS) on all tables
+- Secure authentication with Supabase Auth
+- API routes protected with proper validation
+- HTTPS required for production
+
+## 📈 Analytics & Personalization
+
+### LENS Algorithm
+The personalization system tracks:
+- **View Duration**: How long users watch videos
+- **Completion Rate**: Percentage of video watched
+- **Engagement**: Likes, comments, shares
+- **Creator Following**: Prioritizes followed creators
+- **Tag Preferences**: Learns from liked content tags
+
+### Privacy-First
+- Personalization data is anonymized
+- Users can clear their data anytime
+- Transparent about data usage
+- GDPR compliant design
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Set environment variables in Vercel dashboard
+4. Deploy automatically on push
+
+### Other Platforms
+- **Netlify**: Works with static export
+- **Railway**: Full-stack deployment
+- **DigitalOcean**: App Platform deployment
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make changes to both mock and Supabase drivers
+4. Test in both demo and production modes
+5. Submit a pull request
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+## 🆘 Support
+
+- **Demo Issues**: Check browser console for errors
+- **Production Issues**: Verify Supabase configuration
+- **Build Issues**: Ensure all environment variables are set
+- **Feature Requests**: Open an issue on GitHub
+
+---
+
+**Built with ❤️ using Next.js, Tailwind CSS, and Supabase**
+
