@@ -1,0 +1,17 @@
+# Create/overwrite .gitignore with safe defaults
+@"
+# Node / Next.js
+node_modules/
+.next/
+out/
+.vercel/
+dist/
+coverage/
+*.log
+.env*
+"@ | Out-File -Encoding utf8 .\.gitignore
+
+# Stop tracking node_modules in the index
+git rm -r --cached node_modules 2>$null
+git add .gitignore
+git commit -m "chore: ignore node_modules and untrack from index"
