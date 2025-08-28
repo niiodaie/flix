@@ -3,9 +3,11 @@ import { LensFeed } from "@/components/lens/LensFeed";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div className="min-h-screen bg-gray-900">
       <Navbar />
-      <LensFeed />
-    </main>
+      <main className="container mx-auto px-4 py-8">
+        <LensFeed userId="demo-user" />
+      </main>
+    </div>
   );
 }

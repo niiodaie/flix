@@ -1,7 +1,9 @@
+'use client';
+
+
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-
-export function useRealtime<T>(channelName: string, eventName: string, schema: string, table: string) {
+export function useRealtime<T>(channelName: string, schema: string, table: string) {
   const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,13 +17,13 @@ export function useRealtime<T>(channelName: string, eventName: string, schema: s
 
     channel
       .on(
-        "postgres_changes",
-        { event: eventName, schema: schema, table: table },
+        'postgres_changes',
+        { event: '*', schema: schema, table: table },
         handleEvent
       )
       .subscribe((status) => {
         if (status === "SUBSCRIBED") {
-          console.log(`Subscribed to ${channelName} for ${table} ${eventName} events`);
+          console.log(`Subscribed to ${channelName} for ${table} events`);
         } else if (status === "CHANNEL_ERROR") {
           setError(`Error subscribing to ${channelName}`);
         }
@@ -30,7 +32,7 @@ export function useRealtime<T>(channelName: string, eventName: string, schema: s
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [channelName, eventName, schema, table]);
+  }, [channelName, schema, table]);
 
   return { data, error };
 }
