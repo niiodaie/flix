@@ -107,3 +107,120 @@ CREATE INDEX idx_follows_follower_id ON follows(follower_id);
 CREATE INDEX idx_follows_following_id ON follows(following_id);
 
 
+
+-- Enable Row Level Security
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE videos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE likes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE comments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE watch_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tips ENABLE ROW LEVEL SECURITY;
+ALTER TABLE sponsored_videos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE follows ENABLE ROW LEVEL SECURITY;
+
+-- RLS policies for profiles
+CREATE POLICY "profiles_public_read"
+ON public.profiles FOR SELECT
+USING ( true );  -- allow public read-only
+
+CREATE POLICY "profiles_user_upsert_self"
+ON public.profiles
+FOR INSERT WITH CHECK (auth.uid() = id);
+
+CREATE POLICY "profiles_user_update_self"
+ON public.profiles
+FOR UPDATE USING (auth.uid() = id);
+
+-- RLS policies for videos
+CREATE POLICY "videos_public_read"
+ON public.videos FOR SELECT
+USING ( true );
+
+CREATE POLICY "videos_creator_insert"
+ON public.videos FOR INSERT
+WITH CHECK (auth.uid() = creator_id);
+
+CREATE POLICY "videos_creator_update"
+ON public.videos FOR UPDATE
+USING (auth.uid() = creator_id);
+
+-- RLS policies for watch events
+CREATE POLICY "watch_events_user_read"
+ON public.watch_events FOR SELECT
+USING (auth.uid() = user_id);
+
+CREATE POLICY "watch_events_user_insert"
+ON public.watch_events FOR INSERT
+WITH CHECK (auth.uid() = user_id);
+
+-- RLS policies for tips
+CREATE POLICY "tips_user_read"
+ON public.tips FOR SELECT
+USING (auth.uid() = from_user OR auth.uid() = to_user);
+
+CREATE POLICY "tips_user_insert"
+ON public.tips FOR INSERT
+WITH CHECK (auth.uid() = from_user);
+
+-- RLS policies for sponsored videos
+CREATE POLICY "sponsored_videos_public_read"
+ON public.sponsored_videos FOR SELECT
+USING ( true );
+
+-- RLS policies for follows
+CREATE POLICY "follows_user_read"
+ON public.follows FOR SELECT
+USING (auth.uid() = follower_id OR auth.uid() = following_id);
+
+CREATE POLICY "follows_user_insert"
+ON public.follows FOR INSERT
+WITH CHECK (auth.uid() = follower_id);
+
+CREATE POLICY "follows_user_delete"
+ON public.follows FOR DELETE
+USING (auth.uid() = follower_id);
+
+-- RLS policies for likes
+CREATE POLICY "likes_user_read"
+ON public.likes FOR SELECT
+USING ( true );
+
+CREATE POLICY "likes_user_insert"
+ON public.likes FOR INSERT
+WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "likes_user_delete"
+ON public.likes FOR DELETE
+USING (auth.uid() = user_id);
+
+-- RLS policies for comments
+CREATE POLICY "comments_public_read"
+ON public.comments FOR SELECT
+USING ( true );
+
+CREATE POLICY "comments_user_insert"
+ON public.comments FOR INSERT
+WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "comments_user_update"
+ON public.comments FOR UPDATE
+USING (auth.uid() = user_id);
+
+-- Auto-insert profile on signup
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, username, handle)
+  VALUES (
+    new.id, 
+    COALESCE(new.raw_user_meta_data->>'username', 'user_' || substr(new.id::text, 1, 8)),
+    COALESCE(new.raw_user_meta_data->>'handle', 'user_' || substr(new.id::text, 1, 8))
+  );
+  RETURN new;
+END $$;
+
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
+

@@ -21,10 +21,15 @@ export function LensFeed({ userId = "demo-user" }: LensFeedProps) {
       const currentOffset = reset ? 0 : offset;
       
       const response = await fetch(`/api/lens?userId=${userId}&limit=20&offset=${currentOffset}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to fetch LENS feed');
+      if (data.error) {
+        throw new Error(data.error);
       }
 
       if (reset) {
@@ -39,7 +44,13 @@ export function LensFeed({ userId = "demo-user" }: LensFeedProps) {
       setError(null);
     } catch (err) {
       console.error('Error fetching LENS feed:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load LENS feed');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load LENS feed';
+      setError(errorMessage);
+      
+      // Don't crash the UI - show user-friendly message
+      if (reset) {
+        setVideos([]);
+      }
     } finally {
       setLoading(false);
     }
